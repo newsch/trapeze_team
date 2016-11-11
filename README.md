@@ -7,13 +7,13 @@ Created by Team Pulling an America for ModSim 2016 at Olin College of Engineerin
 ### Physical System
 
 #### Effects
-- time dilation
+- ~~time dilation~~
 - air resistance
-  - altitude (air density)
-  - humidity
-  - temperature
+  - ~~altitude (air density)~~
+  - ~~humidity~~
+  - ~~temperature~~
 - gravity
-  - tidal forces from the moon
+  - ~~tidal forces from the moon~~
 - transfer of momentum between trapeze artists
 
 ### Potential Questions
