@@ -1,5 +1,5 @@
-function first_iteration_tester(flow_handle, events_handle)
-% FIRST_ITERATION_TESTER  plots animation of swinging pendulum
+function flow_event_test(flow_handle, events_handle)
+% FLOW_EVENT_TEST  plots animation of swinging pendulum
 % events_handle is optional.
 
     switch nargin
