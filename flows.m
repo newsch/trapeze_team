@@ -25,5 +25,5 @@ dXdt = Vx;
 dYdt = Vy;
 
 %Packaginng for ode
-For_ode = [dXdt, dYdt, dVxdt, dVydt];
+For_ode = [dXdt; dYdt; dVxdt; dVydt];
 end
