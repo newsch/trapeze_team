@@ -8,8 +8,8 @@ function res = released_flow(~, pos_vel_vector)
     %% Constants
     g_accel = 9.8;     % gravitational accelaration, in m/s^2
     air_density = 1.2; % air density, in kg/m^3
-%     drag_coeff = ;  % coefficient of drag, unitless
-%     cs_area = ;   % cross sectional area of person, in m^2
+    drag_coeff = 1;  % coefficient of drag, unitless
+    cs_area = 0.5;   % cross sectional area of person, in m^2
     mass = 80;      % average mass of person, in kg  
 
     %% Equations
@@ -24,9 +24,9 @@ function res = released_flow(~, pos_vel_vector)
     fx = 0;
     fy = f_gravity;
     
-%     f_air = -0.5 * air_density * drag_coeff * cs_area * (vx^2 + vy^2);
-%     fx = fx + f_air * uvx;
-%     fy = fy + f_air * uvy;
+    f_air = -0.5 * air_density * drag_coeff * cs_area * (vx^2 + vy^2);
+    fx = fx + f_air * uvx;
+    fy = fy + f_air * uvy;
 
     %% velocities 
     dxdt = vx;
