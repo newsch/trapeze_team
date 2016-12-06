@@ -1,26 +1,25 @@
-function flow_event_test_two(flow_handle, events_handle)
+function flow_event_test_two(flow_handle1, flow_handle2, events_handle)
 % FLOW_EVENT_TEST  plots animation of swinging pendulum in polar coordinates
 % events_handle is optional.
 
-    release_time = 5;
-    end_time = release_time + 10;
+    release_time = 0.7;
+    end_time = release_time + 1;
     
     switch nargin
-    case 2
+    case 3
       use_events = true;
     otherwise
       use_events = false;
     end
 
-    init_values = [3*pi/4, 10, 0, 0]; % position, [Angle (radians), Length (m), dA, dL]
+    init_values = [pi/2, 1, 0, 0]; % position, [Angle (radians), Length (m), dA, dL]
     
     if use_events
         options = odeset('Events', events_handle);
-        [times, output] = ode45(flow_handle, [0 release_time], init_values, options);
+        [times, output] = ode45(flow_handle1, [0 release_time], init_values, options);
     else
-        [times, output] = ode45(flow_handle, [0 release_time], init_values);
+        [times, output] = ode45(flow_handle1, [0 release_time], init_values);
     end
-    [times1, output1] = ode45(flow_handle, [release_time end_time], init_values);
     
     A = output(:,1);
     L = output(:,2);
@@ -37,6 +36,19 @@ function flow_event_test_two(flow_handle, events_handle)
             end
         end
     end
+    
+    mid_values = [X(end),Y(end),vX(end),vY(end)];
+    
+    [times1, output1] = ode45(flow_handle2, [release_time end_time], mid_values);
+    
+    Xfin = output1(:,1);
+    Yfin = output1(:,2);
+    
+    %comet(X,Y);
     %polar(A-pi/2,L);
     %comet(A,L);
+    %plot(Xfin,Yfin);
+    
+    compiler_n_plotter(A,L,Xfin,Yfin);
+    
 end
