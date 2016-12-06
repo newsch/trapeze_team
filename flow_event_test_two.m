@@ -40,7 +40,7 @@ function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2,
     
     mid_values = [X(end),Y(end),vX(end),vY(end)];
     
-    [times1, output1] = ode45(flow_handle2, [0 sim_time], mid_values);
+    [times1, output1] = ode45(flow_handle2, [sim_time sim_time+3], mid_values);
     
     Xfin = output1(:,1);
     Yfin = output1(:,2);
@@ -51,5 +51,7 @@ function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2,
     %plot(Xfin,Yfin);
     
     [Xout, Yout] = compiler_n_plotter(A,L,Xfin,Yfin);
+    
+    energy_tester(vX,vY,output1(:,3),output1(:,4),times,times1,80,Yout);
     
 end
