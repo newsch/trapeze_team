@@ -23,5 +23,8 @@ plot(tnew , E)
 plot(tnew, KE)
 plot(tnew, PE)
 xlabel('Time (s)')
-ylabel('Energy (j)')
+
+ylabel('Energy (j)') 
+
 end
+
