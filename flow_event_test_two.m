@@ -8,14 +8,16 @@ function flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_handle
     otherwise
       use_events = false;
     end
+    
+    times = sim_time(1):.1:sim_time(2);
 
     init_values = [pi/2, 1, 0, 0]; % position, [Angle (radians), Length (m), dA, dL]
     
     if use_events
         options = odeset('Events', events_handle);
-        [times, output] = ode45(flow_handle1, [sim_time(1) sim_time(2)], init_values, options);
+        output = ode5(flow_handle1, [times], init_values, options);
     else
-        [times, output] = ode45(flow_handle1, [sim_time(1) sim_time(2)], init_values);
+        output = ode5(flow_handle1, [times], init_values);
     end
     
     A = output(:,1);
