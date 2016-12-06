@@ -18,6 +18,5 @@ xlabel('Time (s)')
 
 ylabel('Energy (j)') 
 
-ylabel('Energy (j)')
 end
 
