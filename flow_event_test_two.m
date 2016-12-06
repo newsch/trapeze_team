@@ -1,12 +1,9 @@
-function flow_event_test_two(flow_handle1, flow_handle2, events_handle)
+function flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_handle)
 % FLOW_EVENT_TEST  plots animation of swinging pendulum in polar coordinates
 % events_handle is optional.
-
-    release_time = 0.7;
-    end_time = release_time + 1;
     
     switch nargin
-    case 3
+    case 4
       use_events = true;
     otherwise
       use_events = false;
@@ -16,9 +13,9 @@ function flow_event_test_two(flow_handle1, flow_handle2, events_handle)
     
     if use_events
         options = odeset('Events', events_handle);
-        [times, output] = ode45(flow_handle1, [0 release_time], init_values, options);
+        [times, output] = ode45(flow_handle1, [sim_time(1) sim_time(2)], init_values, options);
     else
-        [times, output] = ode45(flow_handle1, [0 release_time], init_values);
+        [times, output] = ode45(flow_handle1, [sim_time(1) sim_time(2)], init_values);
     end
     
     A = output(:,1);
@@ -31,15 +28,15 @@ function flow_event_test_two(flow_handle1, flow_handle2, events_handle)
         w = size(A);
         if(i>1)
             if(i<(w(1)-1))
-                vX(i) = X(i+1) - X(i);
-                vY(i) = Y(i+1) - Y(i);
+                vX(i) = (X(i+1) - X(i))*38.2353;
+                vY(i) = (Y(i+1) - Y(i))*38.2353;
             end
         end
     end
     
     mid_values = [X(end),Y(end),vX(end),vY(end)];
     
-    [times1, output1] = ode45(flow_handle2, [release_time end_time], mid_values);
+    [times1, output1] = ode45(flow_handle2, [sim_time(1) sim_time(2)], mid_values);
     
     Xfin = output1(:,1);
     Yfin = output1(:,2);
