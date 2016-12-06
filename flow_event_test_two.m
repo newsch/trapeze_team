@@ -1,7 +1,9 @@
-function out = flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_handle)
+function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_handle)
 % FLOW_EVENT_TEST  plots animation of swinging pendulum in polar coordinates
 % events_handle is optional.
     
+    step_size = 0.05;
+
     switch nargin
     case 4
       use_events = true;
@@ -9,7 +11,7 @@ function out = flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_
       use_events = false;
     end
 
-    times = 0:0.1:sim_time;
+    times = 0.1:step_size:sim_time;
     
     init_values = [pi/2, 1, 0, 0]; % position, [Angle (radians), Length (m), dA, dL]
     
@@ -30,8 +32,8 @@ function out = flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_
         w = size(A);
         if(i>1)
             if(i<(w(1)-1))
-                vX(i) = (X(i+1) - X(i))*step;
-                vY(i) = (Y(i+1) - Y(i))*step;
+                vX(i) = (X(i+1) - X(i))*(1/step_size);
+                vY(i) = (Y(i+1) - Y(i))*(1/step_size);
             end
         end
     end
