@@ -23,8 +23,6 @@ plot(tnew , E)
 plot(tnew, KE)
 plot(tnew, PE)
 xlabel('Time (s)')
-
-ylabel('Energy (j)') 
-
+ylabel('Energy (j)')
+legend({'Total Energy','Kinetic Energy','Potential Energy'},'FontSize',12);
 end
-

@@ -20,7 +20,7 @@ Xout = [X1 ; X2];
 Yout = [Y1 ; Y2];
 
 %{
-plot(X,Y);
+plot(Xout,Yout);
 xlim([-2 2]);
 ylim([-2 2]);
 

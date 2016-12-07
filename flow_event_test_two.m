@@ -1,19 +1,20 @@
-function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2, events_handle)
+function [start_angle,launch_angle,success] = flow_event_test_two(starting_angle, sim_time, flow_handle1, flow_handle2, events_handle)
 % FLOW_EVENT_TEST  plots animation of swinging pendulum in polar coordinates
 % events_handle is optional.
     
-    step_size = 0.05;
+    success = 0;
+    step_size = 0.005;
 
     switch nargin
-    case 4
+    case 5
       use_events = true;
     otherwise
       use_events = false;
     end
 
-    times = 0.1:step_size:sim_time;
+    times = step_size*2:step_size:sim_time;
     
-    init_values = [pi/2, 1, 0, 0]; % position, [Angle (radians), Length (m), dA, dL]
+    init_values = [starting_angle*0.0174533, 1, 0, 0]; % position, [Angle (radians), Length (m), dA, dL]
     
     if use_events
         options = odeset('Events', events_handle);
@@ -24,6 +25,8 @@ function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2,
     
     A = output(:,1);
     L = output(:,2);
+    start_angle = A(1);
+    launch_angle = A(end);
     for i=1:size(A)-1
         X(i) = L(i)*(-sin(A(i)));
         Y(i) = L(i)*(-cos(A(i)));
@@ -40,7 +43,7 @@ function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2,
     
     mid_values = [X(end),Y(end),vX(end),vY(end)];
     
-    [times1, output1] = ode45(flow_handle2, [sim_time sim_time+3], mid_values);
+    [times1, output1] = ode45(flow_handle2, [sim_time sim_time+2], mid_values);
     
     Xfin = output1(:,1);
     Yfin = output1(:,2);
@@ -50,8 +53,17 @@ function [Xout,Yout] = flow_event_test_two(sim_time, flow_handle1, flow_handle2,
     %comet(A,L);
     %plot(Xfin,Yfin);
     
-    [Xout, Yout] = compiler_n_plotter(A,L,Xfin,Yfin);
+    [Xoutput, Youtput] = compiler_n_plotter(A,L,Xfin,Yfin);
     
-    energy_tester(vX,vY,output1(:,3),output1(:,4),times,times1,80,Yout);
+    for q = 1:length(Xoutput)
+        if(abs(Xoutput(q) - 2) < 0.5)
+            if(abs(Youtput(q) + 2) < 0.5)
+                success = 1;
+                break
+            end
+        end
+    end
+    
+    %energy_tester(vX,vY,output1(:,3),output1(:,4),times,times1,80,Yout);
     
 end
